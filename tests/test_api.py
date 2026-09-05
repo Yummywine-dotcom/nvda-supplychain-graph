@@ -3,7 +3,7 @@ def test_get_metadata(client):
     assert response.status_code == 200
     data = response.json()
     assert data["ticker"] == "NASDAQ: NVDA"
-    assert data["cut_off_date"] == "2024-03-31"
+    assert data["cut_off_date"] == "2026-09-05"
     assert "disclaimer" in data
     assert "scope" in data
 
@@ -39,13 +39,13 @@ def test_get_relations_with_filters(client):
 def test_time_and_relevance_filters(client):
     response = client.get(
         "/v1/companies/NVDA/relations"
-        "?published_on_or_after=2024-01-01&published_on_or_before=2024-03-31&min_relevance=80"
+        "?published_on_or_after=2026-01-01&published_on_or_before=2026-09-05&min_relevance=80"
     )
     assert response.status_code == 200
     data = response.json()
     assert data["total"] >= 1
     for item in data["data"]:
-        assert item["evidence"]["publish_date"] >= "2024-01-01"
+        assert item["evidence"]["publish_date"] >= "2026-01-01"
         assert item["relevance_score"] >= 80
 
 
@@ -79,7 +79,8 @@ def test_graph_endpoint(client):
     data = response.json()
     ids = {node["id"] for node in data["nodes"]}
     assert "NVDA" in ids
-    assert "SOUN" in ids
+    assert "INTC" in ids
+    assert "SPCX" in ids
     assert data["edges"][0]["relation_type"] == "investor_or_investee"
 
 

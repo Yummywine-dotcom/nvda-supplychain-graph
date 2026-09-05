@@ -11,11 +11,11 @@ This is **not investment advice**. It is a structured evidence pack for the ARTi
 | Legal entity | NVIDIA Corporation |
 | Ticker | NASDAQ: NVDA |
 | CIK | 0001045810 |
-| Cut-off date | **31 March 2024** |
-| Snapshot file | `data/snapshot_nvda.json` (version 1.2.0) |
-| Access window | Evidence `access_time` values are 28 March 2024, on or before the cut-off |
+| Cut-off date | **5 September 2026** |
+| Snapshot file | `data/snapshot_nvda.json` (version 1.3.0) |
+| Access window | Evidence `access_time` values are 5 September 2026, on or before the cut-off |
 
-**Scope.** Listed companies connected to NVIDIA in five relation types: `supplier`, `customer`, `partner`, `investor_or_investee`, `peer`. The snapshot includes every listed foundry, memory vendor, and contract manufacturer **named** in the FY2024 Form 10-K Manufacturing paragraph, plus newsroom customers, a Lenovo partnership, 13F holdings, and named GPU/SoC peers. Each row has a stable `relation_id`, direction, fact/inference/unknown status, locator, confidence, and relevance.
+**Scope.** Listed companies connected to NVIDIA in five relation types: `supplier`, `customer`, `partner`, `investor_or_investee`, `peer`. The snapshot includes every listed foundry, memory vendor, and contract manufacturer **named** in the FY2026 Form 10-K Manufacturing paragraph, plus 2025–2026 newsroom customers, a March 2026 Lenovo partnership, the 30 June 2026 13F listed holdings that are public companies, and named GPU/SoC peers. Each row has a stable `relation_id`, direction, fact/inference/unknown status, locator, confidence, and relevance.
 
 **Boundaries.** Only legally accessible public documents. No robots.txt bypass, no login, no paywall, no CAPTCHA solving, no rate-limit evasion, no API keys, and no restricted raw dumps. Undisclosed Tier-2 suppliers are out of scope. Unitree is not the research target.
 
@@ -33,7 +33,7 @@ NVIDIA is a U.S. registrant with Form 10-K and Form 13F-HR on SEC EDGAR. Those f
 
 Reviewers do **not** need live SEC or newsroom access to run the service. Runtime reads the committed snapshot only.
 
-1. **Select sources** that are public: NVIDIA FY2024 Form 10-K (filed 21 February 2024), NVIDIA 13F-HR for 31 December 2023 (filed 14 February 2024, accession `0001045810-24-000021`), NVIDIA Newsroom, Lenovo StoryHub.
+1. **Select sources** that are public: NVIDIA FY2026 Form 10-K (filed 25 February 2026, accession `0001045810-26-000021`), NVIDIA 13F-HR for 30 June 2026 (filed 14 August 2026, accession `0001045810-26-000065`), NVIDIA Newsroom (DGX Cloud Lepton, 11 June 2025), Lenovo StoryHub (16 March 2026).
 2. **Manual extraction** of entity names, tickers, relation type, and a paragraph-level locator. No HTML scraper is shipped.
 3. **Cleaning** in `data/snapshot_nvda.json`: English locators, ISO dates, `investor_or_investee` (not `investee`), access times on or before cut-off.
 4. **Scoring** with the frozen formula in `src/scoring.py`. Pydantic rejects a row if `confidence_score` is not the sum of `score_components`.
@@ -57,10 +57,10 @@ confidence_score =
 | --- | --- | --- |
 | Source authority | SEC Form 10-K / 13F | Single-company newsroom |
 | Independence / directness | Filing names the counterparty in a statutory section | First-party PR; inferred vendor from an adjacent sentence |
-| Timeliness | Published in FY2024 / Q4 2023 filings | 2023-03 news versus 2024-03 cut-off |
+| Timeliness | FY2026 10-K and June 2026 13F | A June 2025 newsroom post versus a Sep 2026 cut-off |
 | Quantifiable info | 13F share count | Named role with no dollars or units |
 
-`relevance_score` is separate: SoundHound can be 99 confidence (the holding exists) and 35 relevance (not core GPU supply).
+`relevance_score` is separate: a 13F holding can be 99 confidence (the shares exist) and still have modest operational relevance if it is not core GPU supply.
 
 ## 5. Environment
 
@@ -122,16 +122,16 @@ Failure path: `GET /v1/companies/TSLA/relations` (Tesla is a *related* peer in t
 ## 7. Known blind spots and later data quality
 
 - The Manufacturing paragraph is now fully mapped for listed names (TSMC, Samsung, Micron, SK hynix, Hon Hai, Wistron, Fabrinet). Unnamed sub-tier vendors remain out of scope.
-- Newsroom customer rows are first-party; independence is capped on purpose.
-- Microsoft (March 2023) is older than Amazon (November 2023); continuation through the cut-off is not re-attested by a 2024 filing in this snapshot.
-- Dual roles (Microsoft/Amazon as GPU customers *and* internal-chip peers) are noted in `source_conflict_notes` rather than duplicated as two high-confidence types without evidence.
+- Newsroom customer rows are first-party; independence is capped on purpose. AWS/Azure evidence is the 11 June 2025 DGX Cloud Lepton announcement, not a 10-K customer table.
+- Dual roles (Microsoft/Amazon as GPU customers *and* internal-chip peers; Intel as competitor *and* 13F holding; CoreWeave as GPU-cloud customer *and* 13F holding) are separate rows or `source_conflict_notes`.
+- Arm and SoundHound appeared in older 13Fs and are **not** in the 30 June 2026 table; they were removed rather than left as stale facts.
+- SpaceX Class A (CUSIP 84615Q103) is included as **NASDAQ: SPCX** after the June 2026 listing (Nasdaq Trader DTN2026-8). The 13F proves an equity holding, not a GPU-supply contract.
 - Korean listings use KRX tickers; ADR tickers are noted in disambiguation where relevant.
-- Future improvement: add a second independent source per newsroom row (customer 10-K / 8-K) and a filing-derived customer-concentration table if NVIDIA ever names buyers.
 
 ## 8. AI declaration
 
 Cursor Grok 4.6 (Cursor AI coding agent) was used to scaffold FastAPI/CLI/tests, to compare the tree against the ARTi checklist, and to open public SEC/newsroom pages for locator checks.
 
-**Manual verification I accept:** FY2024 10-K Manufacturing and Competition wording; 13F-HR accession `0001045810-24-000021` SoundHound share count `1730883`; newsroom dates for Microsoft (21 March 2023) and AWS (28 November 2023); Lenovo StoryHub (24 October 2023). No API keys, personal data, or client secrets were given to the agent.
+**Manual verification I accept:** FY2026 10-K Manufacturing and Competition wording (accession `0001045810-26-000021`); 13F-HR accession `0001045810-26-000065` Intel share count `214776632` and CoreWeave `47213353`; NVIDIA Newsroom DGX Cloud Lepton 11 June 2025; Lenovo StoryHub 16 March 2026. No API keys, personal data, or client secrets were given to the agent.
 
 I take personal responsibility for the research judgments (relation type, fact vs inference vs unknown, scores) and for the engineering behavior of this repository.

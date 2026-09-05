@@ -18,8 +18,9 @@ def test_cli_investee_alias(capsys):
     assert code == 0
     payload = json.loads(capsys.readouterr().out)
     tickers = {row["target_ticker"] for row in payload["data"]}
-    assert "NASDAQ: SOUN" in tickers
-    assert "NASDAQ: ARM" in tickers
+    assert "NASDAQ: INTC" in tickers
+    assert "NASDAQ: CRWV" in tickers
+    assert "NASDAQ: SPCX" in tickers
     for row in payload["data"]:
         assert row["relation_type"] == "investor_or_investee"
 

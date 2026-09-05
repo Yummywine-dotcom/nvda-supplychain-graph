@@ -32,6 +32,7 @@ def test_snapshot_scores_match_components():
         "TWSE: 2317",
         "TWSE: 3231",
         "NYSE: FN",
-        "NASDAQ: ARM",
+        "NASDAQ: CRWV",
+        "NASDAQ: SPCX",
     }:
         assert ticker in named
