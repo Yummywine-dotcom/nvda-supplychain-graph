@@ -12,7 +12,7 @@ This is **not investment advice**. It is a structured evidence pack for the ARTi
 | Ticker | NASDAQ: NVDA |
 | CIK | 0001045810 |
 | Cut-off date | **5 September 2026** |
-| Snapshot file | `data/snapshot_nvda.json` (version 1.4.0) |
+| Snapshot file | `data/snapshot_nvda.json` (version 1.5.0) |
 | Access window | Evidence `access_time` values are 5 September 2026, on or before the cut-off |
 
 **Scope.** Listed companies connected to NVIDIA in five relation types: `supplier`, `customer`, `partner`, `investor_or_investee`, `peer`. The snapshot includes every listed foundry, memory vendor, and contract manufacturer **named** in the FY2026 Form 10-K Manufacturing paragraph, plus 2025–2026 newsroom customers, a March 2026 Lenovo partnership, the 30 June 2026 13F listed holdings that are public companies, and named GPU/SoC peers. Each row has a stable `relation_id`, direction, fact/inference/unknown status, locator, confidence, and relevance.
@@ -123,18 +123,20 @@ Failure path: `GET /v1/companies/TSLA/relations` (Tesla is a *related* peer in t
 
 - The Manufacturing paragraph is now fully mapped for listed names (TSMC, Samsung, Micron, SK hynix, Hon Hai, Wistron, Fabrinet). Unnamed sub-tier vendors remain out of scope.
 - Newsroom customer rows are first-party; independence is capped on purpose. AWS/Azure evidence is the 11 June 2025 DGX Cloud Lepton announcement, not a 10-K customer table.
-- Dual roles (Microsoft/Amazon as GPU customers *and* internal-chip peers; Intel as competitor *and* 13F holding; CoreWeave as GPU-cloud customer *and* 13F holding; Tesla as inferred GPU customer *and* SoC peer *and* historical Tegra supplier) are separate rows or `source_conflict_notes`.
+- Dual roles (Microsoft/Amazon as GPU customers *and* internal-chip peers; Intel as competitor *and* 13F holding; CoreWeave as GPU-cloud customer *and* 13F holding; Tesla as inferred GPU customer *and* SoC peer *and* historical Tegra supplier; Nokia as AI-RAN partner *and* 13F investee; Nebius as GPU-infrastructure customer *and* cloud partner *and* 13F investee) are separate rows or `source_conflict_notes`.
 - Arm and SoundHound appeared in older 13Fs and are **not** in the 30 June 2026 table; they were removed rather than left as stale facts.
 - SpaceX Class A (CUSIP 84615Q103) is included as **NASDAQ: SPCX** after the June 2026 listing (Nasdaq Trader DTN2026-8). The 13F proves an equity holding, not a GPU-supply contract.
 - Generate Biomedicines (**NASDAQ: GENB**) is a confirmed 13F investee (833,325 shares) after NVentures joined the Sep 2023 Series C. A GPU-customer role is recorded only as **Reasonable Inference**; H100/A100/DGX/BioNeMo SKUs were not in the cited locators.
 - Coherent (**NYSE: COHR**) is a confirmed optics **supplier** (nonexclusive multibillion purchase commitment, 2 Mar 2026 NVIDIA Newsroom), **partner** (same strategic agreement / 20-year relationship), and **investee** (13F 7,788,161 shares). 800G/1.6T SKUs and a 1:2 GPU-to-optics attach ratio are not in those locators.
 - Tesla (**NASDAQ: TSLA**) is mapped as **peer** (10-K in-house SoC + Tesla IR Dojo 3 / AI5), **customer** only as **Reasonable Inference** (Cortex capacity disclosed in H100-equivalent GPUs, not named NVIDIA invoices), **historical supplier** (2011 Tegra in Model S), and **Unknown** for current in-car NVIDIA silicon.
+- Nokia (**NYSE: NOK** ADR) is a confirmed **partner** (28 Oct 2025 NVIDIA Newsroom AI-RAN / ARC-Pro; 26 Feb 2026 Nokia RAN Digital Twin on Aerial Omniverse) and **investee** (13F 166,389,351 ADRs). Nokia is not recorded as a named GPU invoice customer; operator GPU-rental economics are not in those locators.
+- Nebius Group (**NASDAQ: NBIS**) is a confirmed **customer** (ongoing NVIDIA infrastructure deployment, including U.S. gigawatt-scale AI factories), **partner** (11 Mar 2026 strategic AI-cloud agreement; $2 billion investment announcement; 5 GW by 2030 is a forward-looking target), and **investee** (13F 1,190,476 Class A shares). H100/H200 SKU counts and named European sites are not in the cited NVIDIA Newsroom locator.
 - Korean listings use KRX tickers; ADR tickers are noted in disambiguation where relevant.
 
 ## 8. AI declaration
 
 Cursor Grok 4.6 (Cursor AI coding agent) was used to scaffold FastAPI/CLI/tests, to compare the tree against the ARTi checklist, and to open public SEC/newsroom pages for locator checks.
 
-**Manual verification I accept:** FY2026 10-K Manufacturing and Competition wording (accession `0001045810-26-000021`); 13F-HR accession `0001045810-26-000065` Intel share count `214776632` and CoreWeave `47213353`; NVIDIA Newsroom DGX Cloud Lepton 11 June 2025; Lenovo StoryHub 16 March 2026. No API keys, personal data, or client secrets were given to the agent.
+**Manual verification I accept:** FY2026 10-K Manufacturing and Competition wording (accession `0001045810-26-000021`); 13F-HR accession `0001045810-26-000065` Intel share count `214776632`, CoreWeave `47213353`, Nokia ADR `166389351`, Nebius Class A `1190476`; NVIDIA Newsroom DGX Cloud Lepton 11 June 2025, Nokia AI-RAN 28 October 2025, Nebius 11 March 2026; Lenovo StoryHub 16 March 2026. No API keys, personal data, or client secrets were given to the agent.
 
 I take personal responsibility for the research judgments (relation type, fact vs inference vs unknown, scores) and for the engineering behavior of this repository.

@@ -3,7 +3,7 @@
     "base_entity": "NVIDIA Corporation",
     "ticker": "NASDAQ: NVDA",
     "cut_off_date": "2026-09-05",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "Offline snapshot of NVIDIA listed-company supply-chain and partnership relations as of 5 September 2026.",
     "scope": "Associated listed companies in five relation types: supplier, customer, partner, investor_or_investee, and peer. Evidence is limited to legally accessible public documents accessed on or before the cut-off.",
     "boundaries": "No private contracts, no paywalled terminals, no login-gated datasets, no crawler that ignores robots.txt, and no Tier-2 suppliers that NVIDIA does not name. Dual-listed tickers use the primary exchange in the cited source. Nasdaq Trader DTN2026-8 maps Space Exploration Technologies Corp. Class A, CUSIP 84615Q103, to NASDAQ: SPCX; do not confuse with the prior unrelated SPCX symbol.",
@@ -13,7 +13,8 @@
       "Foundry wafer split between TSMC and Samsung, and HBM split among SK hynix, Micron, and Samsung.",
       "Whether Tesla's Cortex training clusters currently purchase NVIDIA GPUs: Tesla discloses capacity in H100-equivalent units, which is not a named purchase order.",
       "Whether NVIDIA currently supplies Tesla in-vehicle inference silicon: Tesla IR names AI5 as Tesla-designed; the 2011 Tegra win is historical only.",
-      "13F also lists Nokia and Nebius as listed holdings not yet given dedicated commercial rows. Coherent (NYSE: COHR) is mapped as supplier, partner, and investee from the 2 Mar 2026 NVIDIA Newsroom agreement plus the June 2026 13F.",
+      "Whether NVIDIA's Oct 2025 $1 billion Nokia subscription (stated at $6.01 per share, subject to closing) is the same position as the 166,389,351 NOK ADRs in the 30 Jun 2026 13F is not stated in either locator.",
+      "Whether NVIDIA's Mar 2026 $2 billion Nebius investment (pre-funded warrant in later 13G) is reflected in the 1,190,476 Class A shares on the 30 Jun 2026 13F: the 13F share count and the $2 billion figure are not substituted for each other.",
       "Arm and SoundHound positions in the prior 2023-12-31 13F are no longer in the 2026-06-30 13F."
     ],
     "scoring_method": "confidence_score is the sum of source_authority (max 40), independence_directness (max 25), timeliness vs 2026-09-05 cut-off (max 20), and quantifiable_info (max 15). relevance_score is a separate 0-100 operational-importance judgment."
@@ -800,6 +801,180 @@
         "publish_date": "2026-04-22",
         "access_time": "2026-09-05T13:26:00Z",
         "evidence_locator": "Q1 2026 Update, AI Inference Compute: 'In April, we completed the final chip design of our next-generation AI5 inference processor.'"
+      }
+    },
+    {
+      "relation_id": "nok-ai-ran-partner",
+      "target_entity": "Nokia Corporation",
+      "target_ticker": "NYSE: NOK",
+      "relation_type": "partner",
+      "direction": "NVIDIA <-> AI-RAN / ARC-Pro / Aerial software <-> Nokia",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "NVIDIA Newsroom, 28 Oct 2025 GTC Washington: strategic partnership to add NVIDIA-powered commercial AI-RAN products to Nokia's RAN portfolio; Nokia will embed NVIDIA ARC-Pro in a new AI-RAN solution and accelerate 5G/6G RAN software on CUDA; anyRAN covers Cloud RAN and purpose-built RAN. T-Mobile U.S. trials expected to begin in 2026. Nokia 15 Jul 2026 newsroom later names a commercial AI-RAN platform on anyRAN plus NVIDIA Aerial AI-RAN (pilots end-2026, commercial 2027). Named GPU SKUs (H100/Grace Superchip) and operator GPU-rental economics are not in the Oct 2025 locator.",
+      "confidence_score": 84,
+      "score_components": {
+        "source_authority": 36,
+        "independence_directness": 20,
+        "timeliness": 18,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 36/40 NVIDIA Newsroom; independence_directness 20/25 both CEOs on a named AI-RAN product partnership; timeliness 18/20 28 Oct 2025 versus 2026-09-05 cut-off; quantifiable_info 10/15 named platforms and T-Mobile trial timing, no NVIDIA unit volumes.",
+      "relevance_score": 80,
+      "as_of_date": "2025-10-28",
+      "entity_disambiguation": "Nokia Corporation, NYSE: NOK sponsored ADR (CUSIP 654902204); Helsinki listing NOKIA. Not Nokia of America as a separate issuer.",
+      "uncertainty_notes": "Operators buying Nokia RAN that contains NVIDIA silicon are not themselves mapped as NVIDIA customers from this locator. Edge-AI rental of idle baseband GPUs is not evidenced here.",
+      "source_conflict_notes": "See nok-13f for the equity holding and nok-ran-digital-twin-partner for Aerial Omniverse simulation. Partner is not a GPU invoice.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/nvidia-nokia-ai-telecommunications",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2025-10-28",
+        "access_time": "2026-09-05T14:00:00Z",
+        "evidence_locator": "28 October 2025: 'NVIDIA and Nokia today announced a strategic partnership to add NVIDIA-powered, commercial-grade AI-RAN products to Nokia's industry-leading RAN portfolio'; 'Nokia will ... expand its RAN portfolio by embedding NVIDIA ARC-Pro at the heart of the new AI-RAN solution'; 'NVIDIA will also invest $1 billion in Nokia at a subscription price of $6.01 per share.'"
+      }
+    },
+    {
+      "relation_id": "nok-ran-digital-twin-partner",
+      "target_entity": "Nokia Corporation",
+      "target_ticker": "NYSE: NOK",
+      "relation_type": "partner",
+      "direction": "NVIDIA Aerial Omniverse Digital Twin -> RAN simulation stack -> Nokia RAN Digital Twin",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Nokia blog, 26 Feb 2026 GTC: Nokia RAN Digital Twin is built on NVIDIA Aerial Omniverse Digital Twin (AODT), part of NVIDIA AI Aerial. NVIDIA VP Soma Velayutham is quoted on the AODT modular architecture. No contract value or GPU volume is in the locator.",
+      "confidence_score": 78,
+      "score_components": {
+        "source_authority": 32,
+        "independence_directness": 18,
+        "timeliness": 20,
+        "quantifiable_info": 8
+      },
+      "score_explanation": "source_authority 32/40 Nokia corporate blog with named NVIDIA executive quote; independence_directness 18/25 first-party Nokia, not a bilateral NVIDIA newsroom item; timeliness 20/20 26 Feb 2026; quantifiable_info 8/15 named platform without dollars.",
+      "relevance_score": 62,
+      "as_of_date": "2026-02-26",
+      "entity_disambiguation": "Same Nokia Corporation / NYSE: NOK as nok-ai-ran-partner. RAN radio-propagation twin, not a generic industrial-metaverse claim.",
+      "uncertainty_notes": "This is a simulation/co-engineering fact, not proof that Nokia is an NVIDIA data-center GPU hyperscaler.",
+      "source_conflict_notes": "Complements nok-ai-ran-partner; does not replace the 13F equity row.",
+      "evidence": {
+        "source_url": "https://www.nokia.com/blog/nokia-launches-nokia-ran-digital-twin-to-turbo-charge-ai-native-6g-powered-by-nvidia-aerial-omniverse-digital-twin/",
+        "publisher": "Nokia (corporate blog / GTC announcement)",
+        "publish_date": "2026-02-26",
+        "access_time": "2026-09-05T14:05:00Z",
+        "evidence_locator": "26 February 2026 GTC: 'Nokia announced ... Nokia RAN Digital Twin. Built on the NVIDIA Aerial Omniverse Digital Twin (AODT) platform'; quote from Soma Velayutham, Vice President, AI & Telecoms, NVIDIA."
+      }
+    },
+    {
+      "relation_id": "nok-13f",
+      "target_entity": "Nokia Corporation",
+      "target_ticker": "NYSE: NOK",
+      "relation_type": "investor_or_investee",
+      "direction": "NVIDIA -> equity holding (ADR) -> Nokia",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "13F-HR period ended 30 Jun 2026: NOKIA CORP SPONSORED ADR, CUSIP 654902204, 166,389,351 shares; value column 2209650581 as printed. The 28 Oct 2025 newsroom also states NVIDIA will invest $1 billion in Nokia at $6.01 per share subject to closing; that dollar figure is not substituted for the 13F share count.",
+      "confidence_score": 99,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 19,
+        "quantifiable_info": 15
+      },
+      "score_explanation": "source_authority 40/40 13F-HR; independence_directness 25/25 holdings table; timeliness 19/20; quantifiable_info 15/15 share count.",
+      "relevance_score": 70,
+      "as_of_date": "2026-06-30",
+      "entity_disambiguation": "Nokia Corporation sponsored ADR, NYSE: NOK, CUSIP 654902204.",
+      "uncertainty_notes": "13F does not by itself prove AI-RAN product shipments or board rights.",
+      "source_conflict_notes": "Dual commercial mapping: partner (AI-RAN / digital twin) and investee. Do not collapse them.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000065/0001045810-26-000065.txt",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 13F-HR)",
+        "publish_date": "2026-08-14",
+        "access_time": "2026-09-05T12:00:00Z",
+        "evidence_locator": "INFORMATION TABLE row: NOKIA CORP SPONSORED ADR 654902204 2209650581 166389351 SH SOLE 166389351; accession 0001045810-26-000065."
+      }
+    },
+    {
+      "relation_id": "nbis-customer",
+      "target_entity": "Nebius Group N.V.",
+      "target_ticker": "NASDAQ: NBIS",
+      "relation_type": "customer",
+      "direction": "NVIDIA -> accelerated computing infrastructure (deployed) -> Nebius AI cloud / AI factories",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "NVIDIA Newsroom, 11 Mar 2026: the partnership 'builds upon Nebius's ongoing deployment of NVIDIA infrastructure across its global platform, including multiple gigawatt-scale AI factories in the U.S.' H100/H200/Blackwell unit counts, named European sites (for example Mäntsälä), and 'tens of billions' of CAPEX are not in this locator.",
+      "confidence_score": 84,
+      "score_components": {
+        "source_authority": 36,
+        "independence_directness": 20,
+        "timeliness": 20,
+        "quantifiable_info": 8
+      },
+      "score_explanation": "source_authority 36/40 NVIDIA Newsroom; independence_directness 20/25 NVIDIA names Nebius as deploying NVIDIA infrastructure; timeliness 20/20 11 Mar 2026; quantifiable_info 8/15 gigawatt-scale factories named without SKU or dollar invoices.",
+      "relevance_score": 86,
+      "as_of_date": "2026-03-11",
+      "entity_disambiguation": "Nebius Group N.V., NASDAQ: NBIS, CUSIP N97284108, Amsterdam headquarters. Not residual Yandex N.V. Russian operating businesses; the 13F issuer line is 'NEBIUS GROUP N.V. SHS CLASS A'.",
+      "uncertainty_notes": "Deployment of NVIDIA infrastructure is not a named purchase-order table. Future Rubin/Vera/BlueField adoption in the same PR is partnership/roadmap, not completed SKU shipments.",
+      "source_conflict_notes": "See nbis-partner (strategic co-engineering and $2B investment announcement) and nbis-13f (1,190,476 Class A shares). Do not treat 'European super-distributor' language as a locator fact.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2026-03-11",
+        "access_time": "2026-09-05T14:10:00Z",
+        "evidence_locator": "11 March 2026: 'This partnership builds upon Nebius's ongoing deployment of NVIDIA infrastructure across its global platform, including multiple gigawatt-scale AI factories in the U.S.'"
+      }
+    },
+    {
+      "relation_id": "nbis-partner",
+      "target_entity": "Nebius Group N.V.",
+      "target_ticker": "NASDAQ: NBIS",
+      "relation_type": "partner",
+      "direction": "NVIDIA <-> full-stack AI cloud / AI-factory engineering <-> Nebius",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Same 11 Mar 2026 announcement: strategic partnership covering AI factory design, inference/agentic stack, multi-generation infrastructure (NVIDIA Rubin platform, Vera CPUs, BlueField storage), and fleet management. NVIDIA will invest $2 billion in Nebius. The companies state an aim to enable Nebius to deploy more than 5 gigawatts of NVIDIA systems by end of 2030; that 5 GW figure is a forward-looking target in the locator, not installed capacity as of the cut-off.",
+      "confidence_score": 88,
+      "score_components": {
+        "source_authority": 36,
+        "independence_directness": 20,
+        "timeliness": 20,
+        "quantifiable_info": 12
+      },
+      "score_explanation": "source_authority 36/40 NVIDIA Newsroom; independence_directness 20/25 named strategic partnership with both CEOs; timeliness 20/20; quantifiable_info 12/15 $2 billion and 5 GW/2030 named, 5 GW is a target.",
+      "relevance_score": 84,
+      "as_of_date": "2026-03-11",
+      "entity_disambiguation": "Same NASDAQ: NBIS entity as nbis-customer.",
+      "uncertainty_notes": "Partner/engineering terms are not a 13F share count. NVIDIA Cloud Partner / Exemplar marketing labels from other Nebius pages are not the locator used here.",
+      "source_conflict_notes": "Customer (ongoing NVIDIA infrastructure deployment) and partner (strategic buildout plus investment announcement) are split.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2026-03-11",
+        "access_time": "2026-09-05T14:11:00Z",
+        "evidence_locator": "11 March 2026 headline and lead: strategic partnership to scale full-stack AI cloud; 'NVIDIA will invest $2 billion in Nebius'; collaboration bullets on AI factory design, inference, Rubin/Vera/BlueField, fleet management; 'more than 5 gigawatts of capacity by the end of 2030'."
+      }
+    },
+    {
+      "relation_id": "nbis-13f",
+      "target_entity": "Nebius Group N.V.",
+      "target_ticker": "NASDAQ: NBIS",
+      "relation_type": "investor_or_investee",
+      "direction": "NVIDIA -> equity holding -> Nebius",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "13F-HR period ended 30 Jun 2026: NEBIUS GROUP N.V. SHS CLASS A, CUSIP N97284108, 1,190,476 shares; value column 328773757 as printed. The 11 Mar 2026 newsroom $2 billion investment is a separate announcement and is not substituted for this share count.",
+      "confidence_score": 99,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 19,
+        "quantifiable_info": 15
+      },
+      "score_explanation": "source_authority 40/40 13F-HR; independence_directness 25/25 holdings table; timeliness 19/20; quantifiable_info 15/15 share count.",
+      "relevance_score": 76,
+      "as_of_date": "2026-06-30",
+      "entity_disambiguation": "Nebius Group N.V. Class A, NASDAQ: NBIS, CUSIP N97284108.",
+      "uncertainty_notes": "A later Schedule 13G discusses additional Class A shares issuable on a pre-funded warrant; those warrant shares are not the 1,190,476 figure in this 13F row.",
+      "source_conflict_notes": "Triple role: customer, partner, and investee. Do not collapse them.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000065/0001045810-26-000065.txt",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 13F-HR)",
+        "publish_date": "2026-08-14",
+        "access_time": "2026-09-05T12:00:00Z",
+        "evidence_locator": "INFORMATION TABLE row: NEBIUS GROUP N.V. SHS CLASS A N97284108 328773757 1190476 SH SOLE 1190476; accession 0001045810-26-000065."
       }
     }
   ]
