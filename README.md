@@ -127,6 +127,7 @@ Failure path: `GET /v1/companies/TSLA/relations` (Tesla is a *related* peer in t
 - Arm and SoundHound appeared in older 13Fs and are **not** in the 30 June 2026 table; they were removed rather than left as stale facts.
 - SpaceX Class A (CUSIP 84615Q103) is included as **NASDAQ: SPCX** after the June 2026 listing (Nasdaq Trader DTN2026-8). The 13F proves an equity holding, not a GPU-supply contract.
 - Generate Biomedicines (**NASDAQ: GENB**) is a confirmed 13F investee (833,325 shares) after NVentures joined the Sep 2023 Series C. A GPU-customer role is recorded only as **Reasonable Inference**; H100/A100/DGX/BioNeMo SKUs were not in the cited locators.
+- Coherent (**NYSE: COHR**) is a confirmed optics **supplier** (nonexclusive multibillion purchase commitment, 2 Mar 2026 NVIDIA Newsroom), **partner** (same strategic agreement / 20-year relationship), and **investee** (13F 7,788,161 shares). 800G/1.6T SKUs and a 1:2 GPU-to-optics attach ratio are not in those locators.
 - Korean listings use KRX tickers; ADR tickers are noted in disambiguation where relevant.
 
 ## 8. AI declaration

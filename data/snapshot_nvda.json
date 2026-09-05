@@ -12,7 +12,7 @@
       "Revenue or volume shares by named customer are not disclosed in the FY2026 Form 10-K.",
       "Foundry wafer split between TSMC and Samsung, and HBM split among SK hynix, Micron, and Samsung.",
       "Whether Tesla remains a material NVIDIA customer versus an in-house SoC competitor.",
-      "13F also lists Coherent, Nokia, and Nebius; Generate Biomedicines is mapped as listed investee (GENB) plus an inferred GPU-customer row. BioNeMo/CUDA SKU claims are not in the cited locators.",
+      "13F also lists Nokia and Nebius as listed holdings not yet given dedicated commercial rows. Coherent (NYSE: COHR) is mapped as supplier, partner, and investee from the 2 Mar 2026 NVIDIA Newsroom agreement plus the June 2026 13F.",
       "Arm and SoundHound positions in the prior 2023-12-31 13F are no longer in the 2026-06-30 13F."
     ],
     "scoring_method": "confidence_score is the sum of source_authority (max 40), independence_directness (max 25), timeliness vs 2026-09-05 cut-off (max 20), and quantifiable_info (max 15). relevance_score is a separate 0-100 operational-importance judgment."
@@ -248,6 +248,93 @@
         "publish_date": "2026-02-25",
         "access_time": "2026-09-05T12:00:00Z",
         "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, FY2026 Form 10-K filed 25 Feb 2026 (period ended 25 Jan 2026). Contract-manufacturer sentence including Fabrinet."
+      }
+    },
+    {
+      "relation_id": "cohr-optics-supplier",
+      "target_entity": "Coherent Corp.",
+      "target_ticker": "NYSE: COHR",
+      "relation_type": "supplier",
+      "direction": "Coherent -> lasers / optical networking products -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "NVIDIA Newsroom, 2 Mar 2026: nonexclusive multiyear agreement includes an NVIDIA multibillion-dollar purchase commitment and future access and capacity rights for advanced laser and optical networking products. The locator does not name 800G/1.6T SKUs or a GPU-to-optics attach ratio.",
+      "confidence_score": 90,
+      "score_components": {
+        "source_authority": 36,
+        "independence_directness": 20,
+        "timeliness": 20,
+        "quantifiable_info": 14
+      },
+      "score_explanation": "source_authority 36/40 joint NVIDIA Newsroom; independence_directness 20/25 NVIDIA as named purchaser, agreement is nonexclusive; timeliness 20/20 2 Mar 2026; quantifiable_info 14/15 multibillion purchase commitment without SKU or 1:2 attach math.",
+      "relevance_score": 82,
+      "as_of_date": "2026-03-02",
+      "entity_disambiguation": "Coherent Corp., NYSE: COHR, CUSIP 19247G107. Photonics successor to II-VI / Finisar lineage. Not Coherent Inc. legacy ticker COHR collisions with unrelated names.",
+      "uncertainty_notes": "FY2026 NVIDIA 10-K Manufacturing paragraph does not name Coherent; optical supply is evidenced by the March 2026 purchase commitment, not by the 10-K foundry/CM list. Nonexclusive: other optics vendors may also supply NVIDIA clusters.",
+      "source_conflict_notes": "Market commentary that every GPU cluster requires a fixed 1:2 or 1:3 optics attach is not in the cited locator and is not recorded as fact.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2026-03-02",
+        "access_time": "2026-09-05T13:10:00Z",
+        "evidence_locator": "2 March 2026: 'The nonexclusive agreement includes an NVIDIA multibillion-dollar purchase commitment and future access and capacity rights for advanced laser and optical networking products.'"
+      }
+    },
+    {
+      "relation_id": "cohr-optics-partner",
+      "target_entity": "Coherent Corp.",
+      "target_ticker": "NYSE: COHR",
+      "relation_type": "partner",
+      "direction": "NVIDIA <-> silicon photonics / CPO and optical networking R&D <-> Coherent",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Same 2 Mar 2026 announcement: multiyear strategic agreement covering manufacturing capacity and R&D for next-generation AI infrastructure; Coherent CEO cites a 20-year relationship. Separate 18 Mar 2025 Coherent PR names Coherent as an NVIDIA CPO ecosystem collaborator at GTC. InfiniBand/Spectrum-X joint-certification SKUs are not in these locators.",
+      "confidence_score": 88,
+      "score_components": {
+        "source_authority": 36,
+        "independence_directness": 20,
+        "timeliness": 20,
+        "quantifiable_info": 12
+      },
+      "score_explanation": "source_authority 36/40 NVIDIA Newsroom; independence_directness 20/25 both CEOs on a named strategic agreement; timeliness 20/20; quantifiable_info 12/15 R&D/capacity partnership without port-level certification tables.",
+      "relevance_score": 78,
+      "as_of_date": "2026-03-02",
+      "entity_disambiguation": "Same NYSE: COHR entity as cohr-optics-supplier.",
+      "uncertainty_notes": "Partner row is R&D/ecosystem, not proof that Coherent optics are exclusive on Quantum or Spectrum-X switches.",
+      "source_conflict_notes": "Supplier (purchase commitment) and partner (strategic R&D) are split so a commercial buy is not treated as the same fact as co-development.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/nvidia-and-coherent-announce-strategic-partnership-to-develop-optics-technology-to-scale-next-generation-data-center-architecture",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2026-03-02",
+        "access_time": "2026-09-05T13:11:00Z",
+        "evidence_locator": "2 March 2026 headline and lead: multiyear strategic agreement on advanced optics; Jensen Huang quote on silicon photonics; Jim Anderson quote expanding a 20-year relationship across multiple product families."
+      }
+    },
+    {
+      "relation_id": "cohr-13f",
+      "target_entity": "Coherent Corp.",
+      "target_ticker": "NYSE: COHR",
+      "relation_type": "investor_or_investee",
+      "direction": "NVIDIA -> equity holding -> Coherent",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "13F-HR period ended 30 Jun 2026: COHERENT CORP COM, CUSIP 19247G107, 7,788,161 shares; value column 3072195870 as printed. The 2 Mar 2026 newsroom also states NVIDIA is investing $2 billion in Coherent; that dollar figure is a separate announcement from the 13F share count and is not substituted for it.",
+      "confidence_score": 99,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 19,
+        "quantifiable_info": 15
+      },
+      "score_explanation": "source_authority 40/40 13F-HR; independence_directness 25/25 holdings table; timeliness 19/20; quantifiable_info 15/15 share count.",
+      "relevance_score": 75,
+      "as_of_date": "2026-06-30",
+      "entity_disambiguation": "Coherent Corp. common, NYSE: COHR, CUSIP 19247G107.",
+      "uncertainty_notes": "Whether the $2 billion March 2026 investment is fully reflected in the 7.79 million 13F shares is not stated in either locator.",
+      "source_conflict_notes": "Triple role: supplier, partner, and investee. Do not collapse them.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000065/0001045810-26-000065.txt",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 13F-HR)",
+        "publish_date": "2026-08-14",
+        "access_time": "2026-09-05T12:00:00Z",
+        "evidence_locator": "INFORMATION TABLE row: COHERENT CORP COM 19247G107 3072195870 7788161 SH SOLE 7788161; accession 0001045810-26-000065."
       }
     },
     {
