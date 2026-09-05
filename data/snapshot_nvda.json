@@ -12,7 +12,7 @@
       "Revenue or volume shares by named customer are not disclosed in the FY2026 Form 10-K.",
       "Foundry wafer split between TSMC and Samsung, and HBM split among SK hynix, Micron, and Samsung.",
       "Whether Tesla remains a material NVIDIA customer versus an in-house SoC competitor.",
-      "13F also lists Coherent, Nokia, Nebius, and Generate Biomedicines; this snapshot maps the largest listed holdings plus CoreWeave and Synopsys, not every 13F row.",
+      "13F also lists Coherent, Nokia, and Nebius; Generate Biomedicines is mapped as listed investee (GENB) plus an inferred GPU-customer row. BioNeMo/CUDA SKU claims are not in the cited locators.",
       "Arm and SoundHound positions in the prior 2023-12-31 13F are no longer in the 2026-06-30 13F."
     ],
     "scoring_method": "confidence_score is the sum of source_authority (max 40), independence_directness (max 25), timeliness vs 2026-09-05 cut-off (max 20), and quantifiable_info (max 15). relevance_score is a separate 0-100 operational-importance judgment."
@@ -451,6 +451,64 @@
         "publish_date": "2026-08-14",
         "access_time": "2026-09-05T12:00:00Z",
         "evidence_locator": "INFORMATION TABLE row: SYNOPSYS INC COM 871607107 2150823302 4821717 SH SOLE 4821717."
+      }
+    },
+    {
+      "relation_id": "genb-13f",
+      "target_entity": "Generate Biomedicines, Inc.",
+      "target_ticker": "NASDAQ: GENB",
+      "relation_type": "investor_or_investee",
+      "direction": "NVIDIA / NVentures -> equity holding -> Generate Biomedicines",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "13F-HR period ended 30 Jun 2026: GENERATE BIOMEDICINES INC COM SHS, CUSIP 370920100, 833,325 shares; value column 14058193 as printed. Company PR 14 Sep 2023 named NVentures, NVIDIA's venture capital arm, as a new Series C investor in a $273 million round (origin of the relationship; not the current share count).",
+      "confidence_score": 99,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 19,
+        "quantifiable_info": 15
+      },
+      "score_explanation": "source_authority 40/40 13F-HR; independence_directness 25/25 statutory table; timeliness 19/20 30 Jun 2026 / filed 14 Aug 2026; quantifiable_info 15/15 exact share count. Series C names NVentures but is not used as the share-count source.",
+      "relevance_score": 32,
+      "as_of_date": "2026-06-30",
+      "entity_disambiguation": "Generate Biomedicines, Inc., NASDAQ: GENB, CUSIP 370920100, IPO about 27 Feb 2026. Not Recursion (RXRX) or other Flagship AI-biotech names.",
+      "uncertainty_notes": "13F does not disclose NVentures versus other NVIDIA vehicles, board rights, or remaining Series C ownership percentage.",
+      "source_conflict_notes": "Series C PR (14 Sep 2023) and the 2026 13F are consistent on NVIDIA-affiliated ownership; they measure different dates and instruments.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000065/0001045810-26-000065.txt",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 13F-HR)",
+        "publish_date": "2026-08-14",
+        "access_time": "2026-09-05T12:00:00Z",
+        "evidence_locator": "INFORMATION TABLE row: GENERATE BIOMEDICINES INC COM SHS 370920100 14058193 833325 SH SOLE 833325; accession 0001045810-26-000065."
+      }
+    },
+    {
+      "relation_id": "genb-customer-inference",
+      "target_entity": "Generate Biomedicines, Inc.",
+      "target_ticker": "NASDAQ: GENB",
+      "relation_type": "customer",
+      "direction": "NVIDIA -> accelerated compute (inferred) -> Generate Biomedicines",
+      "fact_status": "Reasonable Inference",
+      "quantifiable_info": "The 14 Sep 2023 Generate PR states a machine-learning-powered generative biology platform and names NVentures as a Series C investor. That supports an inference that Generate consumes NVIDIA accelerated compute. The locator does not name H100, A100, DGX, CUDA, or BioNeMo, and does not quantify GPU spend.",
+      "confidence_score": 56,
+      "score_components": {
+        "source_authority": 32,
+        "independence_directness": 12,
+        "timeliness": 8,
+        "quantifiable_info": 4
+      },
+      "score_explanation": "source_authority 32/40 company PR; independence_directness 12/25 first-party, no purchase order; timeliness 8/20 Sep 2023 versus Sep 2026 cut-off; quantifiable_info 4/15 platform described, no SKUs or dollars. SKU-level customer claims are withheld as unlocated.",
+      "relevance_score": 45,
+      "as_of_date": "2023-09-14",
+      "entity_disambiguation": "Same NASDAQ: GENB entity as genb-13f.",
+      "uncertainty_notes": "Generate could train on non-NVIDIA accelerators or rented cloud GPUs not sold as NVIDIA revenue. BioNeMo/CUDA 'full-stack partner' language was not found in the cited PR or the FY2026 10-K.",
+      "source_conflict_notes": "Do not treat the investee fact row as proof of a customer contract. Dual role is investee (confirmed) plus customer (inferred only).",
+      "evidence": {
+        "source_url": "https://generatebiomedicines.com/news-releases/series-c-financing-announcement/",
+        "publisher": "Generate:Biomedicines",
+        "publish_date": "2023-09-14",
+        "access_time": "2026-09-05T13:00:00Z",
+        "evidence_locator": "14 Sep 2023 Series C release: new investors include 'NVentures, NVIDIA’s venture capital arm'; company described as pioneering a machine-learning-powered generative biology platform (The Generate Platform)."
       }
     },
     {

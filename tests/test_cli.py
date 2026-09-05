@@ -21,6 +21,7 @@ def test_cli_investee_alias(capsys):
     assert "NASDAQ: INTC" in tickers
     assert "NASDAQ: CRWV" in tickers
     assert "NASDAQ: SPCX" in tickers
+    assert "NASDAQ: GENB" in tickers
     for row in payload["data"]:
         assert row["relation_type"] == "investor_or_investee"
 
