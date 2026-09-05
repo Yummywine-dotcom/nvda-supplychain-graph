@@ -3,7 +3,7 @@
     "base_entity": "NVIDIA Corporation",
     "ticker": "NASDAQ: NVDA",
     "cut_off_date": "2026-09-05",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "description": "Offline snapshot of NVIDIA listed-company supply-chain and partnership relations as of 5 September 2026.",
     "scope": "Associated listed companies in five relation types: supplier, customer, partner, investor_or_investee, and peer. Evidence is limited to legally accessible public documents accessed on or before the cut-off.",
     "boundaries": "No private contracts, no paywalled terminals, no login-gated datasets, no crawler that ignores robots.txt, and no Tier-2 suppliers that NVIDIA does not name. Dual-listed tickers use the primary exchange in the cited source. Nasdaq Trader DTN2026-8 maps Space Exploration Technologies Corp. Class A, CUSIP 84615Q103, to NASDAQ: SPCX; do not confuse with the prior unrelated SPCX symbol.",
@@ -11,7 +11,8 @@
     "unknowns": [
       "Revenue or volume shares by named customer are not disclosed in the FY2026 Form 10-K.",
       "Foundry wafer split between TSMC and Samsung, and HBM split among SK hynix, Micron, and Samsung.",
-      "Whether Tesla remains a material NVIDIA customer versus an in-house SoC competitor.",
+      "Whether Tesla's Cortex training clusters currently purchase NVIDIA GPUs: Tesla discloses capacity in H100-equivalent units, which is not a named purchase order.",
+      "Whether NVIDIA currently supplies Tesla in-vehicle inference silicon: Tesla IR names AI5 as Tesla-designed; the 2011 Tegra win is historical only.",
       "13F also lists Nokia and Nebius as listed holdings not yet given dedicated commercial rows. Coherent (NYSE: COHR) is mapped as supplier, partner, and investee from the 2 Mar 2026 NVIDIA Newsroom agreement plus the June 2026 13F.",
       "Arm and SoundHound positions in the prior 2023-12-31 13F are no longer in the 2026-06-30 13F."
     ],
@@ -686,32 +687,119 @@
       }
     },
     {
-      "relation_id": "tsla-soc-unknown",
+      "relation_id": "tsla-peer",
       "target_entity": "Tesla, Inc.",
       "target_ticker": "NASDAQ: TSLA",
       "relation_type": "peer",
-      "direction": "Tesla <-> in-house SoC / accelerated computing (net direction unresolved) <-> NVIDIA",
-      "fact_status": "Unknown",
-      "quantifiable_info": "FY2026 10-K still lists Tesla, Inc. among companies with internal teams designing SoC products for their own products. No purchase volumes.",
-      "confidence_score": 70,
+      "direction": "Tesla <-> custom training/inference silicon (Dojo / AI5) <-> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "FY2026 NVIDIA 10-K names Tesla among companies with internal teams designing SoC products for their own products and services. Tesla Q1 2026 shareholder update states continued custom silicon development with Dojo 3 and completed final chip design of the AI5 inference processor in April 2026. No Dojo-versus-H100 performance table is in those locators.",
+      "confidence_score": 95,
       "score_components": {
         "source_authority": 40,
-        "independence_directness": 8,
+        "independence_directness": 25,
         "timeliness": 20,
-        "quantifiable_info": 2
+        "quantifiable_info": 10
       },
-      "score_explanation": "source_authority 40/40; independence_directness 8/25 relationship type incomplete; timeliness 20/20; quantifiable_info 2/15.",
-      "relevance_score": 40,
+      "score_explanation": "source_authority 40/40 NVIDIA 10-K naming Tesla as an in-house SoC designer; independence_directness 25/25 statutory competition list plus Tesla IR on Dojo 3 / AI5; timeliness 20/20 FY2026 10-K and Q1 2026 update; quantifiable_info 10/15 named custom-silicon programs without FLOPs comparison.",
+      "relevance_score": 72,
       "as_of_date": "2026-01-25",
-      "entity_disambiguation": "Tesla, Inc., NASDAQ: TSLA.",
-      "uncertainty_notes": "Net commercial status as of 5 Sep 2026 is unknown from the cited paragraph.",
-      "source_conflict_notes": "Older GPU-customer news conflicts with the 10-K in-house SoC framing; fact_status remains Unknown.",
+      "entity_disambiguation": "Tesla, Inc., NASDAQ: TSLA. Not Tesla, a.s. (Czech utility).",
+      "uncertainty_notes": "In-house SoC/Dojo/AI5 makes Tesla a compute peer in training and vehicle inference. It does not by itself cancel a possible GPU-customer role for Cortex clusters.",
+      "source_conflict_notes": "See tsla-training-customer (inferred NVIDIA GPU use) and tsla-incar-supply-unknown (current in-car NVIDIA supply).",
       "evidence": {
         "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
         "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
         "publish_date": "2026-02-25",
         "access_time": "2026-09-05T12:00:00Z",
         "evidence_locator": "Part I, Item 1. Business, heading Competition, SoC bullet: companies with internal teams designing SoC products for their own products and services, such as Tesla, Inc."
+      }
+    },
+    {
+      "relation_id": "tsla-training-customer",
+      "target_entity": "Tesla, Inc.",
+      "target_ticker": "NASDAQ: TSLA",
+      "relation_type": "customer",
+      "direction": "NVIDIA -> data-center training GPUs (inferred) -> Tesla Cortex clusters",
+      "fact_status": "Reasonable Inference",
+      "quantifiable_info": "Tesla Q1 2026 Update (22 Apr 2026) table 'AI Training Compute': Cortex 1 >100k H100e Production; Cortex 2 >130k H100e Early Ramp. The unit is 'H100 equivalent GPUs', not a statement that Tesla purchased NVIDIA H100/A100 units. Musk 'billions of dollars / highest-priority customer' claims are not in this locator.",
+      "confidence_score": 76,
+      "score_components": {
+        "source_authority": 38,
+        "independence_directness": 8,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 38/40 Tesla IR exhibit; independence_directness 8/25 H100e is a benchmarking unit, not a vendor invoice; timeliness 20/20 Q1 2026 update; quantifiable_info 10/15 cluster sizes in H100e without named NVIDIA SKUs or dollar spend.",
+      "relevance_score": 88,
+      "as_of_date": "2026-04-22",
+      "entity_disambiguation": "Tesla, Inc. training clusters Cortex 1/2 in Texas. Not Tesla Energy or Dojo custom silicon counted as NVIDIA shipments.",
+      "uncertainty_notes": "H100e can include non-NVIDIA accelerators converted to an H100-equivalent. Dojo 3 is described in the same deck as custom silicon to reduce training cost, which cuts against assuming 100% NVIDIA GPUs.",
+      "source_conflict_notes": "Co-opetition: customer inference for training GPUs versus peer fact for Dojo/AI5. Do not collapse into a single relation_type.",
+      "evidence": {
+        "source_url": "https://assets-ir.tesla.com/tesla-contents/IR/TSLA-Q1-2026-Update.pdf",
+        "publisher": "Tesla, Inc. (Q1 2026 Update / IR exhibit)",
+        "publish_date": "2026-04-22",
+        "access_time": "2026-09-05T13:20:00Z",
+        "evidence_locator": "Q1 2026 Update, AI Training Compute: 'Cortex 1 >100k H100e Production' and 'Cortex 2 >130k H100e Early Ramp'; heading 'Tesla AI Training Capacity Ramp (H100 equivalent GPUs)'. Also: 'We are also continuing our custom silicon development with Dojo 3'."
+      }
+    },
+    {
+      "relation_id": "tsla-tegra-historical-supplier",
+      "target_entity": "Tesla, Inc.",
+      "target_ticker": "NASDAQ: TSLA",
+      "relation_type": "supplier",
+      "direction": "NVIDIA -> Tegra infotainment (2011 announcement; historical) -> Tesla Model S",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "NVIDIA Newsroom, 4 Jan 2011 CES: NVIDIA Tegra processors will power infotainment, navigation and instrument-cluster systems in the Tesla Model S; one processor for infotainment/navigation and another for the instrument cluster. This is a historical in-vehicle supply fact, not a 2026 Cortex GPU purchase.",
+      "confidence_score": 70,
+      "score_components": {
+        "source_authority": 34,
+        "independence_directness": 20,
+        "timeliness": 4,
+        "quantifiable_info": 12
+      },
+      "score_explanation": "source_authority 34/40 NVIDIA Newsroom; independence_directness 20/25 both companies named on a product-in-vehicle claim; timeliness 4/20 2011 versus 2026-09-05 cut-off; quantifiable_info 12/15 two Tegra roles named, no unit volumes.",
+      "relevance_score": 25,
+      "as_of_date": "2011-01-04",
+      "entity_disambiguation": "Tesla Motors / Tesla, Inc. Model S infotainment. Not Autopilot HW3/HW4 or Cortex training clusters.",
+      "uncertainty_notes": "The 2011 Tegra win does not evidence 2026 in-car NVIDIA silicon. Autopilot HW2 Drive PX 2 is widely reported but is not the locator used here.",
+      "source_conflict_notes": "See tsla-incar-supply-unknown for current vehicle-compute supply.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/tesla-motors-model-s-to-feature-nvidia-tegra-processors",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2011-01-04",
+        "access_time": "2026-09-05T13:25:00Z",
+        "evidence_locator": "4 January 2011 CES: 'NVIDIA Tegra processors will power the infotainment, navigation and instrument-cluster systems in the Tesla Model S'; 'One processor will be used to power the infotainment and navigation systems, and another for the instrument cluster.'"
+      }
+    },
+    {
+      "relation_id": "tsla-incar-supply-unknown",
+      "target_entity": "Tesla, Inc.",
+      "target_ticker": "NASDAQ: TSLA",
+      "relation_type": "supplier",
+      "direction": "NVIDIA -> in-vehicle inference silicon (current, unresolved) -> Tesla",
+      "fact_status": "Unknown",
+      "quantifiable_info": "Tesla Q1 2026 Update: in April 2026 Tesla completed final chip design of its next-generation AI5 inference processor and is expanding into semiconductor fabrication. That supports Tesla-designed in-car inference. The locator does not say NVIDIA has zero remaining vehicle chips, nor that NVIDIA currently supplies HW4/AI5.",
+      "confidence_score": 68,
+      "score_components": {
+        "source_authority": 38,
+        "independence_directness": 8,
+        "timeliness": 20,
+        "quantifiable_info": 2
+      },
+      "score_explanation": "source_authority 38/40 Tesla IR; independence_directness 8/25 the filing speaks to Tesla's own AI5, not to NVIDIA shipments; timeliness 20/20; quantifiable_info 2/15 no NVIDIA in-car units.",
+      "relevance_score": 35,
+      "as_of_date": "2026-04-22",
+      "entity_disambiguation": "Current Tesla vehicle inference compute, not 2011 Tegra MCU.",
+      "uncertainty_notes": "As of 5 Sep 2026, current in-car NVIDIA supply to Tesla is not established by the cited locators.",
+      "source_conflict_notes": "Historical Tegra supplier fact does not update this current-supply unknown.",
+      "evidence": {
+        "source_url": "https://assets-ir.tesla.com/tesla-contents/IR/TSLA-Q1-2026-Update.pdf",
+        "publisher": "Tesla, Inc. (Q1 2026 Update / IR exhibit)",
+        "publish_date": "2026-04-22",
+        "access_time": "2026-09-05T13:26:00Z",
+        "evidence_locator": "Q1 2026 Update, AI Inference Compute: 'In April, we completed the final chip design of our next-generation AI5 inference processor.'"
       }
     }
   ]

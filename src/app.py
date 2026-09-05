@@ -46,7 +46,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="NVIDIA Supply Chain API",
     description="ARTi Challenge - Supply Chain & Partnership Relation Data API",
-    version="1.3.0",
+    version="1.4.0",
     lifespan=lifespan,
 )
 

@@ -12,7 +12,7 @@ This is **not investment advice**. It is a structured evidence pack for the ARTi
 | Ticker | NASDAQ: NVDA |
 | CIK | 0001045810 |
 | Cut-off date | **5 September 2026** |
-| Snapshot file | `data/snapshot_nvda.json` (version 1.3.0) |
+| Snapshot file | `data/snapshot_nvda.json` (version 1.4.0) |
 | Access window | Evidence `access_time` values are 5 September 2026, on or before the cut-off |
 
 **Scope.** Listed companies connected to NVIDIA in five relation types: `supplier`, `customer`, `partner`, `investor_or_investee`, `peer`. The snapshot includes every listed foundry, memory vendor, and contract manufacturer **named** in the FY2026 Form 10-K Manufacturing paragraph, plus 2025–2026 newsroom customers, a March 2026 Lenovo partnership, the 30 June 2026 13F listed holdings that are public companies, and named GPU/SoC peers. Each row has a stable `relation_id`, direction, fact/inference/unknown status, locator, confidence, and relevance.
@@ -23,7 +23,7 @@ This is **not investment advice**. It is a structured evidence pack for the ARTi
 
 - `Confirmed Fact`: the cited locator names the entity and the mapped relation.
 - `Reasonable Inference`: the locator supports a nearby claim (example: CoWoS packaging inferred for TSMC) but does not name the vendor in that sentence.
-- `Unknown`: the locator names the entity but the net commercial direction is unresolved (example: Tesla as in-house SoC designer versus possible customer).
+- `Unknown`: the locator names the entity but the mapped claim is unresolved (example: whether NVIDIA currently supplies Tesla in-car inference silicon).
 
 ## 2. Why NVIDIA, not Unitree
 
@@ -123,11 +123,12 @@ Failure path: `GET /v1/companies/TSLA/relations` (Tesla is a *related* peer in t
 
 - The Manufacturing paragraph is now fully mapped for listed names (TSMC, Samsung, Micron, SK hynix, Hon Hai, Wistron, Fabrinet). Unnamed sub-tier vendors remain out of scope.
 - Newsroom customer rows are first-party; independence is capped on purpose. AWS/Azure evidence is the 11 June 2025 DGX Cloud Lepton announcement, not a 10-K customer table.
-- Dual roles (Microsoft/Amazon as GPU customers *and* internal-chip peers; Intel as competitor *and* 13F holding; CoreWeave as GPU-cloud customer *and* 13F holding) are separate rows or `source_conflict_notes`.
+- Dual roles (Microsoft/Amazon as GPU customers *and* internal-chip peers; Intel as competitor *and* 13F holding; CoreWeave as GPU-cloud customer *and* 13F holding; Tesla as inferred GPU customer *and* SoC peer *and* historical Tegra supplier) are separate rows or `source_conflict_notes`.
 - Arm and SoundHound appeared in older 13Fs and are **not** in the 30 June 2026 table; they were removed rather than left as stale facts.
 - SpaceX Class A (CUSIP 84615Q103) is included as **NASDAQ: SPCX** after the June 2026 listing (Nasdaq Trader DTN2026-8). The 13F proves an equity holding, not a GPU-supply contract.
 - Generate Biomedicines (**NASDAQ: GENB**) is a confirmed 13F investee (833,325 shares) after NVentures joined the Sep 2023 Series C. A GPU-customer role is recorded only as **Reasonable Inference**; H100/A100/DGX/BioNeMo SKUs were not in the cited locators.
 - Coherent (**NYSE: COHR**) is a confirmed optics **supplier** (nonexclusive multibillion purchase commitment, 2 Mar 2026 NVIDIA Newsroom), **partner** (same strategic agreement / 20-year relationship), and **investee** (13F 7,788,161 shares). 800G/1.6T SKUs and a 1:2 GPU-to-optics attach ratio are not in those locators.
+- Tesla (**NASDAQ: TSLA**) is mapped as **peer** (10-K in-house SoC + Tesla IR Dojo 3 / AI5), **customer** only as **Reasonable Inference** (Cortex capacity disclosed in H100-equivalent GPUs, not named NVIDIA invoices), **historical supplier** (2011 Tegra in Model S), and **Unknown** for current in-car NVIDIA silicon.
 - Korean listings use KRX tickers; ADR tickers are noted in disambiguation where relevant.
 
 ## 8. AI declaration
