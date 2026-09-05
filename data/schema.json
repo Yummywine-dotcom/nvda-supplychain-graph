@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NVIDIASupplyChainSnapshot",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "base_entity": { "type": "string" },
+        "ticker": { "type": "string" },
+        "cut_off_date": { "type": "string", "format": "date" },
+        "version": { "type": "string" },
+        "description": { "type": "string" },
+        "scope": { "type": "string" },
+        "boundaries": { "type": "string" },
+        "disclaimer": { "type": "string" },
+        "unknowns": { "type": "array", "items": { "type": "string" } },
+        "scoring_method": { "type": "string" }
+      },
+      "required": ["base_entity", "ticker", "cut_off_date", "version", "scope", "boundaries", "disclaimer"]
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "relation_id": { "type": "string", "minLength": 1 },
+          "target_entity": { "type": "string" },
+          "target_ticker": { "type": "string" },
+          "relation_type": {
+            "type": "string",
+            "enum": ["supplier", "customer", "partner", "investor_or_investee", "peer"]
+          },
+          "direction": { "type": "string" },
+          "fact_status": {
+            "type": "string",
+            "enum": ["Confirmed Fact", "Reasonable Inference", "Unknown"]
+          },
+          "quantifiable_info": { "type": "string" },
+          "confidence_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "score_components": {
+            "type": "object",
+            "properties": {
+              "source_authority": { "type": "integer", "minimum": 0, "maximum": 40 },
+              "independence_directness": { "type": "integer", "minimum": 0, "maximum": 25 },
+              "timeliness": { "type": "integer", "minimum": 0, "maximum": 20 },
+              "quantifiable_info": { "type": "integer", "minimum": 0, "maximum": 15 }
+            },
+            "required": ["source_authority", "independence_directness", "timeliness", "quantifiable_info"]
+          },
+          "score_explanation": { "type": "string" },
+          "relevance_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "source_url": { "type": "string", "format": "uri" },
+              "publisher": { "type": "string" },
+              "publish_date": { "type": "string" },
+              "access_time": { "type": "string", "format": "date-time" },
+              "evidence_locator": { "type": "string" }
+            },
+            "required": ["source_url", "publisher", "publish_date", "access_time", "evidence_locator"]
+          }
+        },
+        "required": [
+          "relation_id",
+          "target_entity",
+          "target_ticker",
+          "relation_type",
+          "direction",
+          "fact_status",
+          "quantifiable_info",
+          "confidence_score",
+          "score_components",
+          "score_explanation",
+          "relevance_score",
+          "evidence"
+        ]
+      }
+    }
+  },
+  "required": ["metadata", "relations"]
+}

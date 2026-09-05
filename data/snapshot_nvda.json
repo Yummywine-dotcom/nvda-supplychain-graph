@@ -1,0 +1,485 @@
+{
+  "metadata": {
+    "base_entity": "NVIDIA Corporation",
+    "ticker": "NASDAQ: NVDA",
+    "cut_off_date": "2024-03-31",
+    "version": "1.2.0",
+    "description": "Offline snapshot of NVIDIA listed-company supply-chain and partnership relations as of 31 March 2024, including every listed manufacturer named in the FY2024 Form 10-K Manufacturing paragraph and 13F equity holdings.",
+    "scope": "Associated listed companies in five relation types: supplier, customer, partner, investor_or_investee, and peer. Evidence is limited to legally accessible public documents accessed on or before the cut-off.",
+    "boundaries": "No private contracts, no paywalled terminals, no login-gated datasets, no crawler that ignores robots.txt, and no Tier-2 suppliers that NVIDIA does not name. Dual-listed tickers are recorded as the primary exchange used in the cited source.",
+    "disclaimer": "This dataset is research documentation for the ARTi challenge. It is not investment advice, not a recommendation to buy or sell any security, and not a complete picture of NVIDIA's commercial relationships.",
+    "unknowns": [
+      "Revenue or volume shares by named customer are not disclosed in the FY2024 Form 10-K.",
+      "Whether Tesla, Inc. remains a material NVIDIA customer versus an in-house SoC competitor is not resolved by the cited 10-K paragraph.",
+      "Undisclosed foundry split between TSMC and Samsung, and HBM volume split among Micron, SK hynix, and Samsung.",
+      "Unitree and other private robotics OEMs are out of scope."
+    ],
+    "scoring_method": "confidence_score is the sum of source_authority (max 40), independence_directness (max 25), timeliness (max 20), and quantifiable_info (max 15). relevance_score is a separate 0-100 judgment of operational importance to NVIDIA's core GPU business, not a confidence proxy."
+  },
+  "relations": [
+    {
+      "target_entity": "Taiwan Semiconductor Manufacturing Company Limited",
+      "target_ticker": "NYSE: TSM",
+      "relation_type": "supplier",
+      "direction": "TSMC -> foundry wafers -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "FY2024 Form 10-K names TSMC as a foundry used to produce NVIDIA semiconductor wafers. No wafer-share percentage is disclosed in the cited paragraph.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40 SEC Form 10-K; independence_directness 25/25 NVIDIA names TSMC in the Manufacturing section; timeliness 20/20 filed 21 Feb 2024 within the 31 Mar 2024 cut-off; quantifiable_info 10/15 named foundry role but no volume or dollar split. CoWoS exclusivity is not claimed because the same paragraph only says NVIDIA utilizes CoWoS packaging, not that TSMC is the sole CoWoS vendor.",
+      "relevance_score": 100,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "TSMC / Taiwan Semiconductor Manufacturing Company Limited, NYSE: TSM (ADR), not TSM Group or unrelated 'TSMC' string matches.",
+      "uncertainty_notes": "Samsung is named as a second foundry in the same sentence, so TSMC is not evidenced as a sole-source foundry.",
+      "source_conflict_notes": "None for the foundry naming. Industry commentary about CoWoS capacity was not treated as a substitute for the 10-K sentence.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:00:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, paragraph beginning 'We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers.'"
+      },
+      "relation_id": "tsm-foundry"
+    },
+    {
+      "target_entity": "Taiwan Semiconductor Manufacturing Company Limited",
+      "target_ticker": "NYSE: TSM",
+      "relation_type": "supplier",
+      "direction": "TSMC -> CoWoS-class advanced packaging (inferred) -> NVIDIA",
+      "fact_status": "Reasonable Inference",
+      "quantifiable_info": "The Manufacturing paragraph states 'We utilize CoWoS technology for semiconductor packaging' immediately after naming TSMC as a foundry. It does not name the CoWoS vendor. The inference is that TSMC performs or orchestrates that CoWoS packaging because CoWoS is TSMC's advanced packaging platform. No capacity reservation figures are in the filing.",
+      "confidence_score": 73,
+      "score_components": {
+        "source_authority": 30,
+        "independence_directness": 15,
+        "timeliness": 20,
+        "quantifiable_info": 8
+      },
+      "score_explanation": "source_authority 30/40 same 10-K but the CoWoS sentence does not name TSMC; independence_directness 15/25 the vendor link is an analyst inference, not a direct clause; timeliness 20/20; quantifiable_info 8/15 technology named without volumes. Distinct from the Confirmed Fact foundry row.",
+      "relevance_score": 94,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Same TSMC / NYSE: TSM entity as the foundry row. Two rows exist so fact versus inference stay separable.",
+      "uncertainty_notes": "OSAT vendors could theoretically perform some packaging steps. This inference should not be treated as exclusive-capacity proof.",
+      "source_conflict_notes": "Does not conflict with the foundry fact row; it is a weaker packaging claim from an adjacent sentence.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:05:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, sentence 'We utilize CoWoS technology for semiconductor packaging.' immediately following the TSMC/Samsung foundry sentence."
+      },
+      "relation_id": "tsm-cowos"
+    },
+    {
+      "target_entity": "Samsung Electronics Co., Ltd.",
+      "target_ticker": "KRX: 005930",
+      "relation_type": "supplier",
+      "direction": "Samsung -> foundry wafers and memory -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "The same Manufacturing paragraph names Samsung as a wafer foundry and as a memory supplier. No split versus TSMC or SK hynix is disclosed.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40 Form 10-K; independence_directness 25/25 explicit naming; timeliness 20/20 FY2024 filing; quantifiable_info 10/15 dual role named without volumes.",
+      "relevance_score": 88,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Samsung Electronics Co., Ltd. (KRX: 005930), not Samsung SDI, Samsung SDS, or Samsung C&T.",
+      "uncertainty_notes": "The 10-K does not say whether foundry or memory is the larger Samsung wallet share.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:00:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing: foundry clause naming Samsung Electronics Co., Ltd., and memory clause 'We purchase memory from Micron Technology, Inc., SK Hynix Inc., and Samsung.'"
+      },
+      "relation_id": "samsung-foundry-memory"
+    },
+    {
+      "target_entity": "SK hynix Inc.",
+      "target_ticker": "KRX: 000660",
+      "relation_type": "supplier",
+      "direction": "SK hynix -> memory -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Form 10-K states NVIDIA purchases memory from SK Hynix Inc. HBM market-share figures from third-party research are not used.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40 Form 10-K; independence_directness 25/25 named memory vendor; timeliness 20/20; quantifiable_info 10/15 role named, no unit volumes.",
+      "relevance_score": 90,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "SK hynix Inc. / SK Hynix Inc., KRX: 000660, not SK Square or SK Telecom.",
+      "uncertainty_notes": "Memory includes DRAM/HBM; the filing does not isolate HBM.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:00:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, sentence 'We purchase memory from Micron Technology, Inc., SK Hynix Inc., and Samsung.'"
+      },
+      "relation_id": "skhynix-memory"
+    },
+    {
+      "target_entity": "Microsoft Corporation",
+      "target_ticker": "NASDAQ: MSFT",
+      "relation_type": "customer",
+      "direction": "NVIDIA -> GPU compute / DGX Cloud hosting -> Microsoft Azure",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "NVIDIA Newsroom, 21 March 2023: 'Microsoft Azure will host NVIDIA DGX Cloud.' No GPU unit count or Azure revenue share is in that paragraph.",
+      "confidence_score": 72,
+      "score_components": {
+        "source_authority": 34,
+        "independence_directness": 12,
+        "timeliness": 14,
+        "quantifiable_info": 12
+      },
+      "score_explanation": "source_authority 34/40 official NVIDIA newsroom (not a statutory filing); independence_directness 12/25 first-party PR, not an independent auditor or 10-K customer table; timeliness 14/20 published 21 Mar 2023, about 12 months before cut-off; quantifiable_info 12/15 hosting relationship stated without units. Tens-of-thousands GPU claims from later commentary were excluded because they are not in the locator.",
+      "relevance_score": 92,
+      "as_of_date": "2023-03-21",
+      "entity_disambiguation": "Microsoft Corporation, NASDAQ: MSFT, Azure as the consuming cloud unit. Not Minecraft or LinkedIn as standalone issuers.",
+      "uncertainty_notes": "The PR does not prove Microsoft is NVIDIA's largest customer.",
+      "source_conflict_notes": "The FY2024 10-K Competition section also lists Microsoft as a large cloud company designing internal accelerated computing hardware. Customer (GPU buyer) and peer (custom-chip designer) can coexist. This row records the customer direction evidenced by the newsroom locator; the peer direction is recorded on AMD/Intel-style competition rows for named GPU rivals, not duplicated here.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/microsoft-and-nvidia-accelerate-enterprise-generative-ai",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2023-03-21",
+        "access_time": "2024-03-28T12:15:00Z",
+        "evidence_locator": "Body paragraph stating Microsoft Azure will host NVIDIA DGX Cloud (joint generative-AI announcement dated 21 March 2023)."
+      },
+      "relation_id": "msft-azure-customer"
+    },
+    {
+      "target_entity": "Amazon.com, Inc.",
+      "target_ticker": "NASDAQ: AMZN",
+      "relation_type": "customer",
+      "direction": "NVIDIA -> GPU instances and DGX Cloud -> Amazon Web Services",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "28 November 2023 NVIDIA Newsroom: AWS to offer GH200 NVL32; DGX Cloud on AWS; Project Ceiba described as 16,384 NVIDIA GH200 Superchips hosted by AWS for NVIDIA R&D. EC2 instance families P5e/G6/G6e are named. Hyperscaler spend as a percent of NVIDIA revenue remains undisclosed.",
+      "confidence_score": 77,
+      "score_components": {
+        "source_authority": 34,
+        "independence_directness": 12,
+        "timeliness": 18,
+        "quantifiable_info": 13
+      },
+      "score_explanation": "source_authority 34/40 NVIDIA newsroom; independence_directness 12/25 first-party; timeliness 18/20 Nov 2023 versus Mar 2024 cut-off; quantifiable_info 13/15 Ceiba chip count and instance families named.",
+      "relevance_score": 93,
+      "as_of_date": "2023-11-28",
+      "entity_disambiguation": "Amazon.com, Inc., NASDAQ: AMZN; consuming unit is Amazon Web Services, Inc., a subsidiary, not Amazon Robotics as a separate listed entity.",
+      "uncertainty_notes": "Project Ceiba is NVIDIA-internal R&D hosted on AWS, which is a customer/hosting relationship, not proof of AWS being the largest external GPU buyer.",
+      "source_conflict_notes": "FY2024 10-K also lists Amazon as a cloud company with internal accelerated-computing designs (peer). This row keeps customer/hosting as the primary mapped type because the locator is a commercial infrastructure collaboration, and flags the dual role here.",
+      "evidence": {
+        "source_url": "https://nvidianews.nvidia.com/news/aws-nvidia-strategic-collaboration-for-generative-ai",
+        "publisher": "NVIDIA Newsroom",
+        "publish_date": "2023-11-28",
+        "access_time": "2024-03-28T12:20:00Z",
+        "evidence_locator": "Lead announcement dated 28 November 2023 (AWS re:Invent): AWS to host DGX Cloud with GH200 NVL32; Project Ceiba 'featuring 16,384 NVIDIA GH200 Superchips'."
+      },
+      "relation_id": "amzn-aws-customer"
+    },
+    {
+      "target_entity": "Lenovo Group Limited",
+      "target_ticker": "HKEX: 0992",
+      "relation_type": "partner",
+      "direction": "NVIDIA <-> hybrid AI systems co-engineering <-> Lenovo",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Lenovo StoryHub, 24 October 2023, title and opening paragraph: expanding partnership to deliver new hybrid AI solutions. No contract value in the locator.",
+      "confidence_score": 75,
+      "score_components": {
+        "source_authority": 32,
+        "independence_directness": 18,
+        "timeliness": 17,
+        "quantifiable_info": 8
+      },
+      "score_explanation": "source_authority 32/40 corporate press release; independence_directness 18/25 issued by Lenovo (counterparty), not NVIDIA-only; timeliness 17/20 Oct 2023; quantifiable_info 8/15 qualitative product partnership.",
+      "relevance_score": 68,
+      "as_of_date": "2023-10-24",
+      "entity_disambiguation": "Lenovo Group Limited, HKEX: 0992 (also OTC: LNVGY ADR). Not Lenovo Futureverse or Motorola Solutions.",
+      "uncertainty_notes": "OEM/ODM volume is not in the press release. 10-K names Hon Hai, Wistron, and Fabrinet as contract manufacturers, not Lenovo.",
+      "source_conflict_notes": "None. Partnership PR does not contradict the 10-K manufacturing list because those are assembly subcontractors, a different relation.",
+      "evidence": {
+        "source_url": "https://news.lenovo.com/pressroom/press-releases/lenovo-and-nvidia-expand-partnership-hybrid-ai/",
+        "publisher": "Lenovo StoryHub",
+        "publish_date": "2023-10-24",
+        "access_time": "2024-03-28T12:30:00Z",
+        "evidence_locator": "Headline and first paragraph: Lenovo and NVIDIA expanding partnership to deliver new hybrid AI solutions (24 October 2023)."
+      },
+      "relation_id": "lenovo-hybrid-ai"
+    },
+    {
+      "target_entity": "SoundHound AI, Inc.",
+      "target_ticker": "NASDAQ: SOUN",
+      "relation_type": "investor_or_investee",
+      "direction": "NVIDIA -> equity holding -> SoundHound AI",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "NVIDIA Form 13F-HR for period ended 31 Dec 2023, filed 14 Feb 2024: SOUNDHOUND AI INC CLASS A COM, CUSIP 836100107, 1,730,883 shares; value column 3669472 as printed. Share count is the operative fact.",
+      "confidence_score": 99,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 19,
+        "quantifiable_info": 15
+      },
+      "score_explanation": "source_authority 40/40 SEC 13F-HR; independence_directness 25/25 statutory holdings table; timeliness 19/20 quarter-end 31 Dec 2023, filed 14 Feb 2024 (one point reserved because holdings can change after quarter-end); quantifiable_info 15/15 exact share count.",
+      "relevance_score": 35,
+      "as_of_date": "2023-12-31",
+      "entity_disambiguation": "SoundHound AI, Inc. Class A common, NASDAQ: SOUN, CUSIP 836100107. Not SoundHound Inc. private-era entities without this CUSIP.",
+      "uncertainty_notes": "13F does not state board rights, partnership terms, or whether the holding is strategic versus financial. Accession 0001045810-24-000021 is the Q4 2023 13F; an older snapshot URL ending in 000037 was incorrect and was replaced.",
+      "source_conflict_notes": "None among 13F rows for this CUSIP in this filing.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000021/0001045810-24-000021.txt",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 13F-HR)",
+        "publish_date": "2024-02-14",
+        "access_time": "2024-03-28T12:45:00Z",
+        "evidence_locator": "INFORMATION TABLE row: SOUNDHOUND AI INC CLASS A COM 836100107 3669472 1730883 SH SOLE 1730883; period of report 2023-12-31; accession 0001045810-24-000021."
+      },
+      "relation_id": "soun-13f"
+    },
+    {
+      "target_entity": "Advanced Micro Devices, Inc.",
+      "target_ticker": "NASDAQ: AMD",
+      "relation_type": "peer",
+      "direction": "AMD <-> discrete GPU / accelerated computing competition <-> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "FY2024 Form 10-K Competition list names Advanced Micro Devices, Inc., or AMD, among suppliers of discrete and integrated GPUs and accelerated computing solutions. No share-of-market figure in that bullet.",
+      "confidence_score": 97,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 12
+      },
+      "score_explanation": "source_authority 40/40 Form 10-K; independence_directness 25/25 NVIDIA names AMD as a current competitor; timeliness 20/20; quantifiable_info 12/15 competitive category is specific (discrete/integrated GPUs for AI) without market-share numbers.",
+      "relevance_score": 96,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Advanced Micro Devices, Inc., NASDAQ: AMD. Not AMD (Australian) or unrelated ticker collisions.",
+      "uncertainty_notes": "MI300X product comparisons in trade press were not used as evidence.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T13:00:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Competition, bullet 'suppliers and licensors of hardware and software for discrete and integrated GPUs... including... Advanced Micro Devices, Inc., or AMD... and Intel Corporation, or Intel.'"
+      },
+      "relation_id": "amd-peer"
+    },
+    {
+      "target_entity": "Intel Corporation",
+      "target_ticker": "NASDAQ: INTC",
+      "relation_type": "peer",
+      "direction": "Intel <-> GPU / accelerated computing competition <-> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Same Competition bullet names Intel Corporation as a current competitor in discrete/integrated GPUs and accelerated computing.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40; independence_directness 25/25 named competitor; timeliness 20/20; quantifiable_info 10/15 named without product-line revenue overlap figures. Slightly below AMD because the same sentence groups Intel with a broader set and does not isolate data-center GPU share.",
+      "relevance_score": 80,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Intel Corporation, NASDAQ: INTC, not Intelbras or Mobileye (MBLY) as a separate issuer.",
+      "uncertainty_notes": "Foundry-customer rumors are outside this locator.",
+      "source_conflict_notes": "None for the peer labeling.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T13:05:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Competition, first competitor bullet naming Intel Corporation, or Intel."
+      },
+      "relation_id": "intc-peer"
+    },
+    {
+      "target_entity": "Tesla, Inc.",
+      "target_ticker": "NASDAQ: TSLA",
+      "relation_type": "peer",
+      "direction": "Tesla <-> in-house SoC / accelerated computing (relationship net direction unresolved) <-> NVIDIA",
+      "fact_status": "Unknown",
+      "quantifiable_info": "FY2024 Form 10-K lists Tesla, Inc. among companies with internal teams designing SoC products for their own products and services. The cited sentence does not quantify purchases from NVIDIA or confirm that automotive GPU sales continue.",
+      "confidence_score": 70,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 8,
+        "timeliness": 20,
+        "quantifiable_info": 2
+      },
+      "score_explanation": "source_authority 40/40 Form 10-K; independence_directness 8/25 the filing names Tesla only as an in-house SoC designer, which is weak as a complete relationship map; timeliness 20/20; quantifiable_info 2/15 no units or dollars. Historical automotive-customer coverage is treated as unverified in this snapshot.",
+      "relevance_score": 40,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Tesla, Inc., NASDAQ: TSLA. Not Tesla, a.s. (Czech utility) or Tesla Motors private-era aliases.",
+      "uncertainty_notes": "Net commercial status (customer, peer, or both) as of 31 Mar 2024 is unknown from the cited paragraph. Do not infer current Dojo versus NVIDIA GPU mix.",
+      "source_conflict_notes": "Older news about Tesla buying NVIDIA GPUs conflicts with the 10-K framing of Tesla as an internal SoC designer. This snapshot does not pick a winner; fact_status is Unknown.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T13:10:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Competition, SoC bullet: 'companies with internal teams designing SoC products for their own products and services, such as Tesla, Inc.'"
+      },
+      "relation_id": "tsla-soc-unknown"
+    },
+    {
+      "relation_id": "mu-memory",
+      "target_entity": "Micron Technology, Inc.",
+      "target_ticker": "NASDAQ: MU",
+      "relation_type": "supplier",
+      "direction": "Micron -> memory -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Form 10-K: NVIDIA purchases memory from Micron Technology, Inc., SK Hynix Inc., and Samsung. No volume split.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40 Form 10-K; independence_directness 25/25 named memory vendor; timeliness 20/20; quantifiable_info 10/15 role named, no units.",
+      "relevance_score": 86,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Micron Technology, Inc., NASDAQ: MU. Not Microchip Technology (MCHP).",
+      "uncertainty_notes": "HBM versus commodity DRAM is not isolated.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:08:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, sentence 'We purchase memory from Micron Technology, Inc., SK Hynix Inc., and Samsung.'"
+      }
+    },
+    {
+      "relation_id": "honhai-cms",
+      "target_entity": "Hon Hai Precision Industry Co., Ltd.",
+      "target_ticker": "TWSE: 2317",
+      "relation_type": "supplier",
+      "direction": "Hon Hai -> assembly / test / packaging -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Form 10-K names Hon Hai Precision Industry Co., Ltd. as a contract manufacturer for assembly, testing and packaging of final products. No unit volumes.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40; independence_directness 25/25 named CM; timeliness 20/20; quantifiable_info 10/15.",
+      "relevance_score": 78,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Hon Hai Precision Industry Co., Ltd. (Foxconn), TWSE: 2317. Also OTC: HNHPF. Not Foxconn Industrial Internet as a separate listing used here.",
+      "uncertainty_notes": "Share of NVIDIA box-build versus other CMs is undisclosed.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:09:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, sentence naming Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet as independent subcontractors and contract manufacturers."
+      }
+    },
+    {
+      "relation_id": "wistron-cms",
+      "target_entity": "Wistron Corporation",
+      "target_ticker": "TWSE: 3231",
+      "relation_type": "supplier",
+      "direction": "Wistron -> assembly / test / packaging -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Same CM sentence names Wistron Corporation. No volumes.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40; independence_directness 25/25 named CM; timeliness 20/20; quantifiable_info 10/15.",
+      "relevance_score": 72,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Wistron Corporation, TWSE: 3231. Not Wistron NeWeb (WNC) or Wiwynn (6669.TW) unless separately evidenced.",
+      "uncertainty_notes": "Wiwynn server-ODM coverage is not in this locator.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:10:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, contract-manufacturer sentence including Wistron Corporation."
+      }
+    },
+    {
+      "relation_id": "fabrinet-cms",
+      "target_entity": "Fabrinet",
+      "target_ticker": "NYSE: FN",
+      "relation_type": "supplier",
+      "direction": "Fabrinet -> assembly / test / packaging -> NVIDIA",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "Same CM sentence names Fabrinet. No volumes.",
+      "confidence_score": 95,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 20,
+        "quantifiable_info": 10
+      },
+      "score_explanation": "source_authority 40/40; independence_directness 25/25 named CM; timeliness 20/20; quantifiable_info 10/15.",
+      "relevance_score": 70,
+      "as_of_date": "2024-01-28",
+      "entity_disambiguation": "Fabrinet, NYSE: FN, Cayman-incorporated optical/electronics manufacturing services. Not Fabrinet USA as a separate issuer.",
+      "uncertainty_notes": "Optical versus GPU module mix is undisclosed.",
+      "source_conflict_notes": "None.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 10-K)",
+        "publish_date": "2024-02-21",
+        "access_time": "2024-03-28T12:11:00Z",
+        "evidence_locator": "Part I, Item 1. Business, heading Manufacturing, contract-manufacturer sentence including Fabrinet."
+      }
+    },
+    {
+      "relation_id": "arm-13f",
+      "target_entity": "Arm Holdings plc",
+      "target_ticker": "NASDAQ: ARM",
+      "relation_type": "investor_or_investee",
+      "direction": "NVIDIA -> equity holding -> Arm Holdings plc",
+      "fact_status": "Confirmed Fact",
+      "quantifiable_info": "13F-HR information table: ARM HOLDINGS PLC SPONSORED ADR, CUSIP 042068205, 1,960,784 shares, value column 147343114 as printed. Share count is the operative fact.",
+      "confidence_score": 99,
+      "score_components": {
+        "source_authority": 40,
+        "independence_directness": 25,
+        "timeliness": 19,
+        "quantifiable_info": 15
+      },
+      "score_explanation": "source_authority 40/40 13F-HR; independence_directness 25/25 holdings table; timeliness 19/20 Q4 2023 filed 14 Feb 2024; quantifiable_info 15/15 share count. Relevance is financial-holding, not a foundry or GPU customer.",
+      "relevance_score": 42,
+      "as_of_date": "2023-12-31",
+      "entity_disambiguation": "Arm Holdings plc sponsored ADR, NASDAQ: ARM, CUSIP 042068205. Not Arm Limited private-era naming and not SoftBank Group as the parent issuer.",
+      "uncertainty_notes": "13F does not describe commercial ARM ISA licensing versus a purely financial ADR holding. SoftBank remains the controlling shareholder of Arm; this row is NVIDIA's reported beneficial position only.",
+      "source_conflict_notes": "None in this 13F table for CUSIP 042068205.",
+      "evidence": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000021/0001045810-24-000021.txt",
+        "publisher": "U.S. Securities and Exchange Commission (NVIDIA Form 13F-HR)",
+        "publish_date": "2024-02-14",
+        "access_time": "2024-03-28T12:46:00Z",
+        "evidence_locator": "INFORMATION TABLE row: ARM HOLDINGS PLC SPONSORED ADR 042068205 147343114 1960784 SH SOLE 1960784; accession 0001045810-24-000021."
+      }
+    }
+  ]
+}
